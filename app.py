@@ -20,11 +20,11 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # Twilio configuration
-TWILIO_ACCOUNT_SID = ''  # Add your Twilio account SID
-TWILIO_AUTH_TOKEN = ''   # Add your Twilio auth token
-TWILIO_PHONE_NUMBER = '' # Add your Twilio phone number
-EMERGENCY_NUMBER = ''    # Add emergency contact number
-SMS_NUMBER = ''          # Add SMS notification number
+TWILIO_ACCOUNT_SID = 'AC9b6db539daaf8adce9a1b248b8f6b97e'  # Add your Twilio account SID
+TWILIO_AUTH_TOKEN = '49c1763c45f51504cc6a20a66828c608'   # Add your Twilio auth token
+TWILIO_WHATSAPP_NUMBER = '4155238886' # Add your Twilio WhatsApp phone number
+TWILIO_SMS_NUMBER = '8338979791' # Add your Twilio phone number
+EMERGENCY_NUMBER = '6506276216' # Add emergency contact number
 
 # Palantir AIP configuration (placeholder)
 PALANTIR_API_KEY = ''    # Add your Palantir API key
@@ -165,7 +165,7 @@ def analyze_fire_with_palantir(image_path):
 def send_emergency_call(fire_details):
     """Send emergency call via Twilio with fire details"""
     try:
-        if not all([TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, EMERGENCY_NUMBER]):
+        if not all([TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_SMS_NUMBER, EMERGENCY_NUMBER]):
             print("Twilio credentials not configured. Skipping emergency call.")
             return "DEMO_CALL_SID"
             
@@ -179,30 +179,17 @@ def send_emergency_call(fire_details):
         message += f"Spread status is {fire_details['spread_status']}. "
         message += "Immediate response is needed. "
         message += f"{fire_details['flammable_materials']}."
-        
-        response.say(message, voice='alice')
-        
-        # Save TwiML to a temporary file
-        twiml_file = f"static/twiml_{uuid.uuid4()}.xml"
-        with open(twiml_file, 'w') as f:
-            f.write(str(response))
-        
-        # Get the public URL for the TwiML file (in production, this would be a public URL)
-        # For demo purposes, we'll use a placeholder
-        twiml_url = f"http://your-server.com/{twiml_file}"
-        
-        # In a real implementation, you would host this file or use a TwiML Bin
-        # For this demo, we'll just simulate the call
+
+        print(message)
         
         # Actual Twilio call code (commented out for demo)
-        # call = client.calls.create(
-        #     to=EMERGENCY_NUMBER,
-        #     from_=TWILIO_PHONE_NUMBER,
-        #     url=twiml_url
-        # )
-        # return call.sid
-        
-        return "DEMO_CALL_SID"
+        call = client.calls.create(
+            to=EMERGENCY_NUMBER,
+            from_=TWILIO_SMS_NUMBER,
+            twiml=f'<Response><Say>{message}</Say></Response>'
+        )
+        return call.sid
+
     except Exception as e:
         print(f"Error sending emergency call: {e}")
         return "ERROR_CALL_SID"
@@ -210,7 +197,7 @@ def send_emergency_call(fire_details):
 def send_detailed_sms(fire_details):
     """Send detailed SMS about fire via Twilio"""
     try:
-        if not all([TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, SMS_NUMBER]):
+        if not all([TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_NUMBER, EMERGENCY_NUMBER]):
             print("Twilio credentials not configured. Skipping SMS.")
             return "DEMO_SMS_SID"
             
@@ -226,14 +213,13 @@ def send_detailed_sms(fire_details):
         message_body += f"Area: {fire_details['flammable_materials']}"
         
         # Actual Twilio SMS code (commented out for demo)
-        # message = client.messages.create(
-        #     body=message_body,
-        #     to=SMS_NUMBER,
-        #     from_=TWILIO_PHONE_NUMBER
-        # )
-        # return message.sid
+        message = client.messages.create(
+            body=message_body,
+            to="whatsapp:+1" + EMERGENCY_NUMBER,
+            from_="whatsapp:+1" + TWILIO_WHATSAPP_NUMBER
+        )
+        return message.sid
         
-        return "DEMO_SMS_SID"
     except Exception as e:
         print(f"Error sending SMS: {e}")
         return "ERROR_SMS_SID"
