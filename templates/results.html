@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fire Detection Results</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        padding-top: 30px;
+      }
+      .results-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      .results-header {
+        text-align: center;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+      }
+      .results-content {
+        display: flex;
+        flex-direction: column;
+      }
+      @media (min-width: 768px) {
+        .results-content {
+          flex-direction: row;
+        }
+      }
+      .image-section {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-right: 1px solid #dee2e6;
+      }
+      .analysis-section {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+      .uploaded-image {
+        max-width: 100%;
+        max-height: 300px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .status-indicator {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 24px;
+      }
+      .fire-detected {
+        background-color: #dc3545;
+        color: white;
+        animation: blinking 1s infinite;
+      }
+      .no-fire {
+        background-color: #28a745;
+        color: white;
+      }
+      @keyframes blinking {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      .confidence {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .phone-model {
+        border: 10px solid #343a40;
+        border-radius: 30px;
+        padding: 20px;
+        max-width: 300px;
+        margin: 0 auto;
+        background-color: #000;
+        color: white;
+      }
+      .phone-screen {
+        min-height: 400px;
+        background-color: #222;
+        border-radius: 10px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+      }
+      .phone-header {
+        text-align: center;
+        padding: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #444;
+      }
+      .call-status {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .call-animation {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: #dc3545;
+        margin-bottom: 20px;
+        animation: pulse 1.5s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(0.95);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(0.95);
+          opacity: 0.7;
+        }
+      }
+      .fire-details {
+        margin-top: 20px;
+      }
+      .fire-details h3 {
+        margin-bottom: 15px;
+        font-size: 20px;
+      }
+      .detail-item {
+        margin-bottom: 10px;
+        padding: 8px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+      }
+      .detail-label {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .detail-value {
+        padding-left: 10px;
+      }
+      .action-buttons {
+        margin-top: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="results-container">
+        <div class="results-header">
+          <h1>Fire Detection Results</h1>
+        </div>
+
+        <div class="results-content">
+          <!-- Left Section: Image and Status -->
+          <div class="image-section">
+            <img
+              src="/static/{{ image_path }}"
+              alt="Analyzed Image"
+              class="uploaded-image"
+            />
+
+            <div
+              class="status-indicator {% if fire_detected %}fire-detected{% else %}no-fire{% endif %}"
+            >
+              {% if fire_detected %} FIRE DETECTED! {% else %} No Fire Detected
+              {% endif %}
+            </div>
+
+            <div class="confidence">
+              <p>Confidence: {{ (confidence * 100)|round(2) }}%</p>
+            </div>
+          </div>
+
+          <!-- Right Section: Phone Model and Details -->
+          <div class="analysis-section">
+            {% if fire_detected %}
+            <div class="phone-model">
+              <div class="phone-screen">
+                <div class="phone-header">Emergency: 911</div>
+                <div class="call-status">
+                  <div class="call-animation"></div>
+                  <p>Emergency Call In Progress</p>
+                  <p>Connecting to Emergency Services...</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="fire-details">
+              <h3>Palantir AIP Fire Analysis</h3>
+
+              <div class="detail-item">
+                <div class="detail-label">Location:</div>
+                <div class="detail-value">{{ fire_details.location }}</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-label">Spread Status:</div>
+                <div class="detail-value">{{ fire_details.spread_status }}</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-label">Risk Level:</div>
+                <div class="detail-value">{{ fire_details.risk_level }}</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-label">Size:</div>
+                <div class="detail-value">{{ fire_details.size }}</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-label">Smoke Height:</div>
+                <div class="detail-value">{{ fire_details.smoke_height }}</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-label">Stage:</div>
+                <div class="detail-value">{{ fire_details.stage }}</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-label">Area:</div>
+                <div class="detail-value">
+                  {{ fire_details.flammable_materials }}
+                </div>
+              </div>
+            </div>
+            {% else %}
+            <div class="alert alert-success" role="alert">
+              <h4 class="alert-heading">Safe Area Detected</h4>
+              <p>
+                No fire or smoke detected in the uploaded image. The area
+                appears to be safe.
+              </p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="action-buttons p-3">
+          <a href="/" class="btn btn-primary">Analyze Another Image</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% if fire_detected %}
+    <script>
+      // Simulating voice message playback
+      const message =
+        "Fire detected at the {{ fire_details.location }}. " +
+        "Spread status is {{ fire_details.spread_status }}. " +
+        "Immediate response is needed. " +
+        "{{ fire_details.flammable_materials }}.";
+
+      // In a real application, this would be handled by Twilio's voice call
+      // This is just a simulation for the demo
+      setTimeout(() => {
+        if ("speechSynthesis" in window) {
+          const speech = new SpeechSynthesisUtterance(message);
+          speech.rate = 0.9;
+          window.speechSynthesis.speak(speech);
+        }
+      }, 2000);
+    </script>
+    {% endif %}
+  </body>
+</html>
