@@ -105,9 +105,9 @@ def predict_fire(image_path):
     try:
         img = preprocess_image(image_path)
         prediction = model.predict(img)
-        confidence = float(prediction[0][0])
+        confidence = 1 - float(prediction[0][0])
         # Lower values (close to 0) indicate fire detected, higher values (close to 1) indicate no fire
-        fire_detected = confidence < 0.5
+        fire_detected = confidence > 0.5
         return confidence, fire_detected
     except Exception as e:
         print(f"Error making prediction: {e}")
