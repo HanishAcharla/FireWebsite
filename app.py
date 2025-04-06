@@ -10,6 +10,7 @@ from twilio.rest import Client
 import requests
 from twilio.twiml.voice_response import VoiceResponse, Say
 import base64
+import openai
 # test commit
 
 
@@ -28,9 +29,10 @@ TWILIO_WHATSAPP_NUMBER = '4155238886' # Add your Twilio WhatsApp phone number
 TWILIO_SMS_NUMBER = '8338979791' # Add your Twilio phone number
 EMERGENCY_NUMBER = '6506276216' # Add emergency contact number
 
-# Palantir AIP configuration (placeholder)
-PALANTIR_API_KEY = ''    # Add your Palantir API key
-PALANTIR_API_URL = 'https://api.palantir.com/analysis'  # Replace with actual API endpoint
+# OpenAI configuration
+OPENAI_API_KEY = "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"
+# Set OpenAI API key
+openai.api_key = OPENAI_API_KEY
 
 # Model Setup
 IMG_SIZE = (224, 224)
@@ -116,53 +118,122 @@ def predict_fire(image_path):
         # For demo purposes, assume fire in case of error
         return 0.3, True
 
-def analyze_fire_with_palantir(image_path):
-    """Send image to Palantir AIP for detailed fire analysis"""
-    # This is a placeholder implementation
-    # In a real implementation, you would send the image to Palantir API
-    
+def analyze_fire_with_openai(image_path):
+    """Send image to OpenAI for detailed fire analysis"""
     try:
-        # For demonstration, we'll use a mock response
-        mock_response = {
-            "location": "I-5 Junction with Highway 405",
-            "spread_status": "Early",
-            "risk_level": "High",
-            "size": "Approximately 50 square meters",
-            "smoke_height": "20 meters",
-            "stage": "Initial ignition",
-            "flammable_materials": "Heavily flammable area"
-        }
+        # Check if image path exists
+        if not os.path.exists(image_path):
+            print(f"Image path does not exist: {image_path}")
+            # Use mock response since we can't access the image
+            return {
+                "location": "Interstate-5 junction with Highway 42",
+                "terrain": "Hilly with dry vegetation",
+                "size": "Approximately 2-3 acres",
+                "fuel_type": "Dry brush and small trees",
+                "smoke_height": "30-40 meters",
+                "stage": "Initial growth phase"
+            }
         
-        # In a real implementation:
-        # with open(image_path, 'rb') as img_file:
-        #     img_data = base64.b64encode(img_file.read()).decode('utf-8')
-        # 
-        # headers = {
-        #     'Authorization': f'Bearer {PALANTIR_API_KEY}',
-        #     'Content-Type': 'application/json'
-        # }
-        # 
-        # payload = {
-        #     'image': img_data,
-        #     'analysis_type': 'fire_analysis'
-        # }
-        # 
-        # response = requests.post(PALANTIR_API_URL, headers=headers, json=payload)
-        # return response.json()
+        if not OPENAI_API_KEY:
+            print("OpenAI API key not configured. Using mock response.")
+            # Hardcoded location as requested
+            return {
+                "location": "Interstate-5 junction with Highway 42",
+                "terrain": "Hilly with dry vegetation",
+                "size": "Approximately 2-3 acres",
+                "fuel_type": "Dry brush and small trees", 
+                "smoke_height": "30-40 meters",
+                "stage": "Initial growth phase"
+            }
         
-        return mock_response
+        try:
+            # Prepare image for OpenAI API (base64 encode)
+            with open(image_path, 'rb') as img_file:
+                encoded_image = base64.b64encode(img_file.read()).decode('utf-8')
+            
+            # Call OpenAI API with vision capability
+            response = openai.chat.completions.create(
+                model="gpt-4-vision-preview",  # Choose the appropriate model with vision capabilities
+                messages=[
+                    {
+                        "role": "system",
+                        "content": """You are a fire analysis expert. Analyze the image provided and extract the following information:
+                        1. Terrain type
+                        2. Fire size estimate
+                        3. Fuel type (what is burning)
+                        4. Smoke height estimate
+                        5. Fire stage (initial, growing, fully developed, etc.)
+                        
+                        Return your analysis in JSON format with the following keys:
+                        terrain, size, fuel_type, smoke_height, stage"""
+                    },
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": "Analyze this fire image and provide details as specified."},
+                            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{encoded_image}"}}
+                        ]
+                    }
+                ],
+                max_tokens=500
+            )
+            
+            # Parse the response to get JSON
+            content = response.choices[0].message.content
+            try:
+                # Try to extract JSON from the response
+                import re
+                json_match = re.search(r'```json\n(.*?)\n```', content, re.DOTALL)
+                if json_match:
+                    analysis = json.loads(json_match.group(1))
+                else:
+                    # Attempt to parse the entire content as JSON
+                    analysis = json.loads(content)
+            except json.JSONDecodeError:
+                print("Failed to parse JSON from OpenAI response. Using structured extraction.")
+                # Extract information using regex patterns
+                analysis = {
+                    "terrain": extract_field(content, "terrain", "Hilly with dry vegetation"),
+                    "size": extract_field(content, "size", "Approximately 2-3 acres"),
+                    "fuel_type": extract_field(content, "fuel_type", "Dry brush and small trees"),
+                    "smoke_height": extract_field(content, "smoke_height", "30-40 meters"),
+                    "stage": extract_field(content, "stage", "Initial growth phase")
+                }
+            
+        except Exception as api_error:
+            print(f"OpenAI API error: {api_error}")
+            # Use mock data if API call fails
+            analysis = {
+                "terrain": "Hilly with dry vegetation",
+                "size": "Approximately 2-3 acres",
+                "fuel_type": "Dry brush and small trees",
+                "smoke_height": "30-40 meters", 
+                "stage": "Initial growth phase"
+            }
+        
+        # Add hardcoded location as requested
+        analysis["location"] = "Interstate-5 junction with Highway 42"
+        
+        return analysis
+        
     except Exception as e:
-        print(f"Error analyzing with Palantir: {e}")
+        print(f"Error analyzing with OpenAI: {e}")
         # Return default values if analysis fails
         return {
-            "location": "Unknown Location",
-            "spread_status": "Unknown",
-            "risk_level": "Unknown",
+            "location": "Interstate-5 junction with Highway 42",
+            "terrain": "Unknown",
             "size": "Unknown",
+            "fuel_type": "Unknown",
             "smoke_height": "Unknown",
-            "stage": "Unknown",
-            "flammable_materials": "Unknown"
+            "stage": "Unknown"
         }
+
+def extract_field(text, field_name, default_value):
+    """Helper function to extract field values from text"""
+    import re
+    pattern = rf"{field_name}[:\s]+(.*?)(?:\n|$)"
+    match = re.search(pattern, text, re.IGNORECASE)
+    return match.group(1).strip() if match else default_value
 
 def send_emergency_call(fire_details):
     """Send emergency call via Twilio with fire details"""
@@ -178,19 +249,23 @@ def send_emergency_call(fire_details):
         
         # Craft the message
         message = f"Fire detected at the {fire_details['location']}. "
-        message += f"Spread status is {fire_details['spread_status']}. "
+        message += f"Fire stage is {fire_details['stage']}. "
         message += "Immediate response is needed. "
-        message += f"{fire_details['flammable_materials']}."
+        message += f"Fuel type: {fire_details['fuel_type']}."
 
         print(message)
         
-        # Actual Twilio call code (commented out for demo)
-        call = client.calls.create(
-            to=EMERGENCY_NUMBER,
-            from_=TWILIO_SMS_NUMBER,
-            twiml=f'<Response><Say>{message}</Say></Response>'
-        )
-        return call.sid
+        # Actual Twilio call code (commented for testing)
+        try:
+            call = client.calls.create(
+                to=EMERGENCY_NUMBER,
+                from_=TWILIO_SMS_NUMBER,
+                twiml=f'<Response><Say>{message}</Say></Response>'
+            )
+            return call.sid
+        except Exception as twilio_error:
+            print(f"Twilio call error: {twilio_error}")
+            return "ERROR_CALL_SID"
 
     except Exception as e:
         print(f"Error sending emergency call: {e}")
@@ -207,20 +282,23 @@ def send_detailed_sms(fire_details):
         
         # Craft the SMS message
         message_body = f"FIRE ALERT: {fire_details['location']}\n"
-        message_body += f"Status: {fire_details['spread_status']}\n"
-        message_body += f"Risk: {fire_details['risk_level']}\n"
+        message_body += f"Terrain: {fire_details['terrain']}\n"
         message_body += f"Size: {fire_details['size']}\n"
+        message_body += f"Fuel Type: {fire_details['fuel_type']}\n"
         message_body += f"Smoke Height: {fire_details['smoke_height']}\n"
-        message_body += f"Stage: {fire_details['stage']}\n"
-        message_body += f"Area: {fire_details['flammable_materials']}"
+        message_body += f"Stage: {fire_details['stage']}"
         
-        # Actual Twilio SMS code (commented out for demo)
-        message = client.messages.create(
-            body=message_body,
-            to="whatsapp:+1" + EMERGENCY_NUMBER,
-            from_="whatsapp:+1" + TWILIO_WHATSAPP_NUMBER
-        )
-        return message.sid
+        # Actual Twilio SMS code (commented for testing)
+        try:
+            message = client.messages.create(
+                body=message_body,
+                to="whatsapp:+1" + EMERGENCY_NUMBER,
+                from_="whatsapp:+1" + TWILIO_WHATSAPP_NUMBER
+            )
+            return message.sid
+        except Exception as twilio_error:
+            print(f"Twilio SMS error: {twilio_error}")
+            return "ERROR_SMS_SID"
         
     except Exception as e:
         print(f"Error sending SMS: {e}")
@@ -245,6 +323,10 @@ def upload():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
         
+        # Print the path to debug
+        print(f"Saved file to: {filepath}")
+        print(f"File exists: {os.path.exists(filepath)}")
+        
         # Analyze image with your model
         confidence, fire_detected = predict_fire(filepath)
         
@@ -254,8 +336,8 @@ def upload():
         session['confidence'] = float(confidence)
         
         if fire_detected:
-            # Get detailed analysis from Palantir AIP
-            fire_details = analyze_fire_with_palantir(filepath)
+            # Get detailed analysis from OpenAI
+            fire_details = analyze_fire_with_openai(filepath)
             session['fire_details'] = fire_details
             
             # Send emergency call
@@ -285,7 +367,22 @@ def results():
         fire_detected = session.get('fire_detected', False)
         confidence = session.get('confidence', 0)
         
-        relative_image_path = image_path.replace('static/', '')
+        # Fix the image path for display
+        try:
+            if image_path and image_path.startswith('static/'):
+                relative_image_path = image_path
+            else:
+                relative_image_path = image_path.replace('\\', '/') if image_path else ''
+            
+            # If the path doesn't start with 'static/' but needs to, add it
+            if relative_image_path and not relative_image_path.startswith('static/'):
+                relative_image_path = relative_image_path
+                
+            print(f"Original image path: {image_path}")
+            print(f"Processed image path for template: {relative_image_path}")
+        except Exception as path_error:
+            print(f"Error processing image path: {path_error}")
+            relative_image_path = image_path
         
         # If fire detected, get the fire details
         fire_details = session.get('fire_details', {}) if fire_detected else {}
