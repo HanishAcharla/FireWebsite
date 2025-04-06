@@ -30,9 +30,8 @@ TWILIO_SMS_NUMBER = '8338979791' # Add your Twilio phone number
 EMERGENCY_NUMBER = '6506276216' # Add emergency contact number
 
 # OpenAI configuration
-OPENAI_API_KEY = "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"
 # Set OpenAI API key
-openai.api_key = OPENAI_API_KEY
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Model Setup
 IMG_SIZE = (224, 224)
@@ -306,7 +305,7 @@ def send_detailed_sms(fire_details):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', confidence=0)
 
 @app.route('/upload', methods=['POST'])
 def upload():
