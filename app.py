@@ -31,7 +31,7 @@ EMERGENCY_NUMBER = '6506276216' # Add emergency contact number
 
 # OpenAI configuration
 # Set OpenAI API key
-openai.api_key = os.environ["OPENAI_API_KEY"]
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 # Model Setup
 IMG_SIZE = (224, 224)
@@ -123,32 +123,22 @@ def analyze_fire_with_openai(image_path):
         # Check if image path exists
         if not os.path.exists(image_path):
             print(f"Image path does not exist: {image_path}")
-            # Use mock response since we can't access the image
-            return {
-                "location": "Interstate-5 junction with Highway 42",
-                "terrain": "Hilly with dry vegetation",
-                "size": "Approximately 2-3 acres",
-                "fuel_type": "Dry brush and small trees",
-                "smoke_height": "30-40 meters",
-                "stage": "Initial growth phase"
-            }
+            return default_fire_analysis()
         
-        if not OPENAI_API_KEY:
-            print("OpenAI API key not configured. Using mock response.")
-            # Hardcoded location as requested
-            return {
-                "location": "Interstate-5 junction with Highway 42",
-                "terrain": "Hilly with dry vegetation",
-                "size": "Approximately 2-3 acres",
-                "fuel_type": "Dry brush and small trees", 
-                "smoke_height": "30-40 meters",
-                "stage": "Initial growth phase"
-            }
+        # Check for OpenAI API key
+        api_key = os.environ.get("OPENAI_API_KEY")
+        if not api_key:
+            print("OpenAI API key not found in environment variables. Using mock response.")
+            return default_fire_analysis()
+        
+        openai.api_key = api_key
         
         try:
             # Prepare image for OpenAI API (base64 encode)
             with open(image_path, 'rb') as img_file:
                 encoded_image = base64.b64encode(img_file.read()).decode('utf-8')
+            
+            # Rest of your OpenAI API code...
             
             # Call OpenAI API with vision capability
             response = openai.chat.completions.create(
@@ -226,6 +216,17 @@ def analyze_fire_with_openai(image_path):
             "smoke_height": "Unknown",
             "stage": "Unknown"
         }
+
+def default_fire_analysis():
+    """Return default fire analysis for when OpenAI API is unavailable"""
+    return {
+        "location": "Interstate-5 junction with Highway 42",
+        "terrain": "Hilly with dry vegetation",
+        "size": "Approximately 2-3 acres",
+        "fuel_type": "Dry brush and small trees",
+        "smoke_height": "30-40 meters",
+        "stage": "Initial growth phase"
+    }
 
 def extract_field(text, field_name, default_value):
     """Helper function to extract field values from text"""
@@ -366,22 +367,11 @@ def results():
         fire_detected = session.get('fire_detected', False)
         confidence = session.get('confidence', 0)
         
-        # Fix the image path for display
-        try:
-            if image_path and image_path.startswith('static/'):
-                relative_image_path = image_path
-            else:
-                relative_image_path = image_path.replace('\\', '/') if image_path else ''
-            
-            # If the path doesn't start with 'static/' but needs to, add it
-            if relative_image_path and not relative_image_path.startswith('static/'):
-                relative_image_path = relative_image_path
-                
-            print(f"Original image path: {image_path}")
-            print(f"Processed image path for template: {relative_image_path}")
-        except Exception as path_error:
-            print(f"Error processing image path: {path_error}")
-            relative_image_path = image_path
+        # Fix the image path for display - just get the filename part
+        if image_path:
+            relative_image_path = os.path.basename(image_path)
+        else:
+            relative_image_path = ''
         
         # If fire detected, get the fire details
         fire_details = session.get('fire_details', {}) if fire_detected else {}
@@ -389,9 +379,9 @@ def results():
         return render_template(
             'results.html',
             image_path=relative_image_path,
+            fire_details=fire_details,
             fire_detected=fire_detected,
-            confidence=confidence,
-            fire_details=fire_details
+            confidence=confidence
         )
     except Exception as e:
         print(f"Error rendering results: {e}")
