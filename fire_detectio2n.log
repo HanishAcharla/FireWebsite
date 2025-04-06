@@ -1,0 +1,220 @@
+INFO:__main__:Starting Fire Detection Application
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:__main__:Starting Fire Detection Application
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 105-470-762
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:04:06] "GET / HTTP/1.1" 200 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Calls.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '2011', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:04:11 GMT', 'Location': 'https://call-service.us1.svc.twilio.com/v2/Accounts/CAbf9706f569e24af962608fa25b07c9e0', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ2260fd410ea4fad8a760ce7d07f928bc', 'Twilio-Request-Duration': '0.058', 'X-Home-Region': 'us1', 'X-API-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 dae14f04031970c8435d9859201a3fe0.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'WNe8veMdl1lFU_eJUnjtiMilVZ61D1E-meUKyBqD49W3TQQoJFxAug==', 'X-Powered-By': 'AT-5000', 'X-Shenanigans': 'none', 'Vary': 'Origin'}
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '979', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:04:11 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ7564ed06907f4f7469dc6b8b7b9095db', 'Twilio-Request-Duration': '0.123', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 ad82d8a3c91257adecf18541576c7e72.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'fPp7vxmQNp60tloPipZdtjMvhGakJASxhiQT5r0xz71DKM_7TLxkyA=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:04:11] "POST /upload HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:04:11] "GET /results HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:04:11] "GET /static/uploads/887f1d4b-4de2-494b-a74d-84b541e75703.jpeg HTTP/1.1" 200 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '988', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:04:19 GMT', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQd066e0afdd9952c3a28abc9360d427db', 'Twilio-Request-Duration': '0.115', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Powered-By': 'AT-5000', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 acc85cd7bb80090b1fc6f29cede93766.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'ckAXFyQW-3Of0zSI3E1UefuKySEfCqnUT5YRFfVZBMXpBhzF6IezXw=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:04:20] "GET /next_level HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:04:20] "[33mGET /static/uploads/fire%20level%202.webp HTTP/1.1[0m" 404 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '993', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:04:28 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ2edec3d0f2d5f2e49520e76a7e0491cd', 'Twilio-Request-Duration': '0.116', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 ba51bb9649a17fe3932d945cc355c922.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'EgglAoJwFHSR3sjcQ20iYcFHPA-yvZoR8ZkB9UqJBbG0JYzKP3kIIw=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:04:28] "GET /next_level HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:04:28] "[33mGET /static/uploads/fire%20level%203.webp HTTP/1.1[0m" 404 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '995', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:04:36 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ877bfbed9b8d7ca1b1a2c6177d2873da', 'Twilio-Request-Duration': '0.111', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 ba51bb9649a17fe3932d945cc355c922.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'MJovhy-P9We2_nMb_VXYKemfySdhFLO2BUWrYcwJpKXyRUVvOtRaAQ=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:04:36] "GET /next_level HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:04:36] "[33mGET /static/uploads/fire%20level%204.webp HTTP/1.1[0m" 404 -
+INFO:__main__:Starting Fire Detection Application
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:__main__:Starting Fire Detection Application
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 105-470-762
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:07:28] "GET / HTTP/1.1" 200 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Calls.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '2011', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:07:35 GMT', 'Location': 'https://call-service.us1.svc.twilio.com/v2/Accounts/CAf480eb0632c6a8a3370e023b2142216d', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ4a80082b1aa05294be28a09fa2c5c849', 'Twilio-Request-Duration': '0.070', 'X-Home-Region': 'us1', 'X-API-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 771001bf23680c4bf66e77caba3ceaba.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'JQXJ4co5yiQ1Nf69mqakfY-c2-0__I0aZmYQ0ucELEC65P-djkq_dQ==', 'X-Powered-By': 'AT-5000', 'X-Shenanigans': 'none', 'Vary': 'Origin'}
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '979', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:07:35 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ4bd3f79c9726b4688ae9f9702aab8c1e', 'Twilio-Request-Duration': '0.121', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 2160425a36a5a0604048dda5b151b504.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'VOenS70g1AERlbVHv8kpQpCQar9XU_9VAp1jZA1z6RmmDTVJDl2JkA=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:07:35] "POST /upload HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:07:35] "GET /results HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:07:35] "GET /static/uploads/ee402766-2190-495a-b47b-883f04f675f9.webp HTTP/1.1" 200 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '988', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:07:43 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQda8dd259e5b80ad0654db1d2683a6187', 'Twilio-Request-Duration': '0.107', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 dae14f04031970c8435d9859201a3fe0.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'oMOgkChzY0MQLpN10w_vRpND1JZxwC3Zeej5yzrXIuYRJAeGgBB4Mg=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:07:43] "GET /next_level HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:07:43] "GET /static/uploads/fire%20level%202.webp HTTP/1.1" 200 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '993', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:07:52 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ54ebf1523bc89390f7ffebf2b3c03e3e', 'Twilio-Request-Duration': '0.116', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 bdb686e41bd85ffb1c6e5b48947e5566.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'iqQA2w5lE6gtyuHHkBUVBa59pYgJ4CSbsiXNWIZ9EOZT-FH51-BcwQ=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:07:52] "GET /next_level HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:07:52] "GET /static/uploads/fire%20level%203.webp HTTP/1.1" 200 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '995', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:08:00 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ07de556cb2830d5f382d94b8cf7ca75c', 'Twilio-Request-Duration': '0.099', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 c601f966b37ebf3a1ddf28f033b35904.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'VgEC6PdXE7lQQ49r-3RvPFOkjD428IoFz4XJGEqCx5lFlYx2Y92B3w=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:08:00] "GET /next_level HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:08:00] "GET /static/uploads/fire%20level%204.webp HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:08:46] "GET / HTTP/1.1" 200 -
+INFO:__main__:Starting Fire Detection Application
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:__main__:Starting Fire Detection Application
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 105-470-762
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:09:30] "GET / HTTP/1.1" 200 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Calls.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '2011', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:09:35 GMT', 'Location': 'https://call-service.us1.svc.twilio.com/v2/Accounts/CA25acdfa4349710e933c38240508e38de', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ24450757e6c2c5e641178c0d7e794da2', 'Twilio-Request-Duration': '0.076', 'X-Home-Region': 'us1', 'X-API-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 649e92b251b584632a2d3462342d816a.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'U9dtoUZ83w0buMcg3s8O82s62xeuONrQcrYehSmK-RPq08DR0TfE1A==', 'X-Powered-By': 'AT-5000', 'X-Shenanigans': 'none', 'Vary': 'Origin'}
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '979', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:09:36 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ229e771632a3de491a3b5f93eb92641b', 'Twilio-Request-Duration': '0.117', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 8c0e175c753fbfb8c1b2616e57661f36.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'i7Qr7dAqyGVC9nPfodeSkd8TtOSXRXnqbyAyf0Ue1V7-3fXpQBWLAA=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:09:36] "POST /upload HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:09:36] "GET /results HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:09:36] "GET /static/uploads/74632f10-ca16-4c2a-a4d2-cda1926129bb.webp HTTP/1.1" 200 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '988', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:09:44 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQf6dea08b6266f51de305c779509f88bf', 'Twilio-Request-Duration': '0.115', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 1943af12d816afc5bfe1ce2c8b3de416.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'eIfjPxFm82eTMABIUf0PMSrGM3g1dxQCq43c7Te9px-1fUe41LuBtQ=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:09:44] "GET /next_level HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:09:44] "GET /static/uploads/fire%20level%202.webp HTTP/1.1" 200 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '993', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:09:52 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ73026a6cdd9d2f1024af56201f6c5eb8', 'Twilio-Request-Duration': '0.110', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 62c71b579b931f194fbc7abcc843d132.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': 'HfxVU2E6lyguY4mCk9KZjMVi0cKEshU9GeIJFzxvK9_u795QtKL2nQ=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:09:52] "GET /next_level HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:09:52] "GET /static/uploads/fire%20level%203.webp HTTP/1.1" 200 -
+INFO:twilio.http_client:-- BEGIN Twilio API Request --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/AC9b6db539daaf8adce9a1b248b8f6b97e/Messages.json
+INFO:twilio.http_client:Headers:
+INFO:twilio.http_client:Content-Type : application/x-www-form-urlencoded
+INFO:twilio.http_client:Accept : application/json
+INFO:twilio.http_client:User-Agent : twilio-python/9.5.1 (Darwin arm64) Python/3.9.13
+INFO:twilio.http_client:X-Twilio-Client : python-9.5.1
+INFO:twilio.http_client:Accept-Charset : utf-8
+INFO:twilio.http_client:-- END Twilio API Request --
+INFO:twilio.http_client:Response Status Code: 201
+INFO:twilio.http_client:Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '995', 'Connection': 'keep-alive', 'Date': 'Sun, 06 Apr 2025 13:10:01 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQd29b97488fdf9a257c0643492849fa14', 'Twilio-Request-Duration': '0.092', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 ac433885d6f49db81bf694a6c6b6bea0.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'SFO53-C1', 'X-Amz-Cf-Id': '4vfZ2hMSk_3ovXvopYAR_qXNGon8ufhyq5tuVlZRfqYW7KuVlKlfug=='}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:10:02] "GET /next_level HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2025 06:10:02] "GET /static/uploads/fire%20level%204.webp HTTP/1.1" 200 -

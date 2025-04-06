@@ -1,18 +1,12 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARDOR Fire Detection Results</title>
+    <title>ARDOF Fire Detection Results</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL7n22z7LkZIK-Gs-C-Yc6LbyZQqftGPk&callback=initMap"
-      async
-      defer
-    ></script>
     <style>
       #map {
         width: 100%;
@@ -181,23 +175,34 @@
         margin-top: 20px;
         text-align: center;
       }
+      .progress-indicator {
+        margin-top: 10px;
+        text-align: center;
+        font-style: italic;
+        color: #666;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="results-container">
         <div class="results-header">
-          <h1>ARDOR Fire Detection Results</h1>
+          <h1>ARDOF Fire Detection Results</h1>
+          {% if fire_detected %}
+          <div class="progress-indicator">
+            Fire Level: {{ current_level }} of 4
+          </div>
+          {% endif %}
         </div>
         <div class="results-content">
           <!-- Left Section: Image and Status -->
           <div class="image-section">
             <div id="map"></div>
-            <div class="detail-item"></div>
             <img
               src="/static/uploads/{{ image_path }}"
               alt="Analyzed Image"
               class="uploaded-image"
+              id="image-preview"
             />
 
             <div
@@ -208,7 +213,12 @@
             </div>
 
             <div class="confidence">
-              <p>Confidence: {{ (confidence * 100)|round(2) }}%</p>
+              <p>
+                Confidence:
+                <span id="confidence-value"
+                  >{{ (confidence * 100)|round(2) }}</span
+                >%
+              </p>
             </div>
           </div>
 
@@ -226,35 +236,54 @@
               </div>
             </div>
             <div class="fire-details">
-              <h3>OpenAI Fire Analysis</h3>
+              <h3>AI Fire Analysis</h3>
               <div class="detail-item">
                 <div class="detail-label">Location:</div>
-                <div class="detail-value">{{ fire_details.location }}</div>
+                <div class="detail-value" id="location">
+                  {{ fire_details.location }}
+                </div>
               </div>
 
               <div class="detail-item">
-                <div class="detail-label">Terrain:</div>
-                <div class="detail-value">{{ fire_details.terrain }}</div>
+                <div class="detail-label">Spread Status:</div>
+                <div class="detail-value" id="spread-status">
+                  {{ fire_details.spread_status }}
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-label">Risk Level:</div>
+                <div class="detail-value" id="risk-level">
+                  {{ fire_details.risk_level }}
+                </div>
               </div>
 
               <div class="detail-item">
                 <div class="detail-label">Size:</div>
-                <div class="detail-value">{{ fire_details.size }}</div>
-              </div>
-
-              <div class="detail-item">
-                <div class="detail-label">Fuel Type:</div>
-                <div class="detail-value">{{ fire_details.fuel_type }}</div>
+                <div class="detail-value" id="size">
+                  {{ fire_details.size }}
+                </div>
               </div>
 
               <div class="detail-item">
                 <div class="detail-label">Smoke Height:</div>
-                <div class="detail-value">{{ fire_details.smoke_height }}</div>
+                <div class="detail-value" id="smoke-height">
+                  {{ fire_details.smoke_height }}
+                </div>
               </div>
 
               <div class="detail-item">
                 <div class="detail-label">Stage:</div>
-                <div class="detail-value">{{ fire_details.stage }}</div>
+                <div class="detail-value" id="stage">
+                  {{ fire_details.stage }}
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-label">Flammable Materials:</div>
+                <div class="detail-value" id="flammable-materials">
+                  {{ fire_details.flammable_materials }}
+                </div>
               </div>
             </div>
             {% else %}
@@ -276,18 +305,74 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL7n22z7LkZIK-Gs-C-Yc6LbyZQqftGPk&callback=initMap"
+      async
+      defer
+    ></script>
 
     {% if fire_detected %}
     <script>
+      // Store map globally so we can access it later
+      let map;
+      let userLocation;
+
+
+      // Initialize the map
+      function initMap() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+
+
+              // Create the map
+              map = new google.maps.Map(document.getElementById("map"), {
+                center: userLocation,
+                zoom: 15
+              });
+
+
+              // Add a marker for the user's location
+              new google.maps.Marker({
+                position: userLocation,
+                map: map,
+                title: "Your Location"
+              });
+            },
+            function () {
+              console.error("Geolocation failed or was denied.");
+              // Default location if geolocation fails
+              const defaultLocation = { lat: 37.7749, lng: -122.4194 }; // San Francisco
+              map = new google.maps.Map(document.getElementById("map"), {
+                center: defaultLocation,
+                zoom: 12
+              });
+            }
+          );
+        } else {
+          console.error("Geolocation is not supported by this browser.");
+          // Default location if geolocation not supported
+          const defaultLocation = { lat: 37.7749, lng: -122.4194 }; // San Francisco
+          map = new google.maps.Map(document.getElementById("map"), {
+            center: defaultLocation,
+            zoom: 12
+          });
+        }
+      }
+
+
       // Simulating voice message playback
       const message =
         "Fire detected at the {{ fire_details.location }}. " +
-        "Fire stage is {{ fire_details.stage }}. " +
+        "Spread status is {{ fire_details.spread_status }}. " +
         "Immediate response is needed. " +
-        "Fuel type: {{ fire_details.fuel_type }}.";
+        "{{ fire_details.flammable_materials }}.";
 
-      // In a real application, this would be handled by Twilio's voice call
-      // This is just a simulation for the demo
+
       setTimeout(() => {
         if ("speechSynthesis" in window) {
           const speech = new SpeechSynthesisUtterance(message);
@@ -296,32 +381,92 @@
         }
       }, 2000);
 
-      function initMap() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            function (position) {
-              const userLocation = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              };
 
-              const map = new google.maps.Map(document.getElementById("map"), {
-                center: userLocation,
-                zoom: 15,
-              });
+      // Auto-progress to next fire level
+      document.addEventListener('DOMContentLoaded', function() {
+        const currentLevel = {{ current_level }};
 
-              new google.maps.Marker({
-                position: userLocation,
-                map: map,
-                title: "Your Location",
+        if (currentLevel < 4) {
+          setTimeout(function() {
+            fetch('/next_level')
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  // Update the page with new data without reloading
+                  document.getElementById('image-preview').src = '/static/uploads/' + data.image_path;
+                  document.getElementById('confidence-value').textContent = (data.confidence * 100).toFixed(2);
+                  document.getElementById('spread-status').textContent = data.fire_details.spread_status;
+                  document.getElementById('risk-level').textContent = data.fire_details.risk_level;
+                  document.getElementById('size').textContent = data.fire_details.size;
+                  document.getElementById('smoke-height').textContent = data.fire_details.smoke_height;
+                  document.getElementById('stage').textContent = data.fire_details.stage;
+                  document.getElementById('flammable-materials').textContent = data.fire_details.flammable_materials;
+
+                  // Update the progress indicator
+                  document.querySelector('.progress-indicator').textContent = `Fire Level: ${data.current_level} of 4`;
+
+                  // Create and play a new voice notification
+                  if ("speechSynthesis" in window) {
+                    const newMessage =
+                      `Fire situation update. Spread status is now ${data.fire_details.spread_status}. ` +
+                      `Risk level is ${data.fire_details.risk_level}. Fire size is ${data.fire_details.size}.`;
+                    const speech = new SpeechSynthesisUtterance(newMessage);
+                    speech.rate = 0.9;
+                    window.speechSynthesis.speak(speech);
+                  }
+
+                  // If there's another level to progress to, set up the next timer
+                  if (data.has_next) {
+                    setTimeout(function() {
+                      fetch('/next_level')
+                        .then(response => response.json())
+                        .then(updatePageWithNewData);
+                    }, 8000);
+                  }
+                }
+              })
+              .catch(error => {
+                console.error('Error fetching next level:', error);
               });
-            },
-            function () {
-              console.error("Geolocation failed or was denied.");
-            }
-          );
-        } else {
-          console.error("Geolocation is not supported by this browser.");
+          }, 8000); // 8 seconds
+        }
+      });
+
+
+      // Function to update the page with new data
+      function updatePageWithNewData(data) {
+        if (data.success) {
+          // Update the page with new data
+          document.getElementById('image-preview').src = '/static/uploads/' + data.image_path;
+          document.getElementById('confidence-value').textContent = (data.confidence * 100).toFixed(2);
+          document.getElementById('spread-status').textContent = data.fire_details.spread_status;
+          document.getElementById('risk-level').textContent = data.fire_details.risk_level;
+          document.getElementById('size').textContent = data.fire_details.size;
+          document.getElementById('smoke-height').textContent = data.fire_details.smoke_height;
+          document.getElementById('stage').textContent = data.fire_details.stage;
+          document.getElementById('flammable-materials').textContent = data.fire_details.flammable_materials;
+
+          // Update the progress indicator
+          document.querySelector('.progress-indicator').textContent = `Fire Level: ${data.current_level} of 4`;
+
+          // Create and play a new voice notification
+          if ("speechSynthesis" in window) {
+            const newMessage =
+              `Fire situation update. Spread status is now ${data.fire_details.spread_status}. ` +
+              `Risk level is ${data.fire_details.risk_level}. Fire size is ${data.fire_details.size}.`;
+            const speech = new SpeechSynthesisUtterance(newMessage);
+            speech.rate = 0.9;
+            window.speechSynthesis.speak(speech);
+          }
+
+          // If there's another level to progress to, set up the next timer
+          if (data.has_next) {
+            setTimeout(function() {
+              fetch('/next_level')
+                .then(response => response.json())
+                .then(updatePageWithNewData);
+            }, 8000);
+          }
         }
       }
     </script>
